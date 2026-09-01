@@ -27,7 +27,7 @@ function render(){
   const list=filtered(); els.results.innerHTML=""; els.resultCount.textContent=list.length; els.watchedCount.textContent=state.watched.size;
   if(!list.length){els.results.innerHTML='<div class="empty">No matches. Try a dancer name, another year, or another round.</div>';syncUrl();return}
   list.forEach(b=>{
-    const node=els.tpl.content.cloneNode(true); const card=node.querySelector(".card");
+    const node=els.tpl.content.cloneNode(true);
     node.querySelector(".badges").append(makeBadge(b.year),makeBadge(b.roundLabel));
     node.querySelector("h2").textContent=battleTitle(b);
     const p=node.querySelector(".people");
@@ -76,4 +76,7 @@ els.close.addEventListener("click",()=>els.dialog.close());
 els.dialog.addEventListener("close",()=>els.player.innerHTML="");
 els.dialog.addEventListener("click",e=>{if(e.target===els.dialog)els.dialog.close()});
 
-fetch("./data/battles.json").then(r=>r.json()).then(x=>{state.data=x.battles;hydrateUrl();render()}).catch(err=>{els.results.innerHTML=`<div class="empty">Failed to load catalog: ${err.message}</div>`});
+const catalogFiles=["2025","2024","2023","2022"].map(y=>`./data/battles-${y}.json`);
+Promise.all(catalogFiles.map(url=>fetch(url).then(r=>{if(!r.ok)throw new Error(`${url}: ${r.status}`);return r.json()})))
+  .then(parts=>{state.data=parts.flatMap(x=>x.battles||[]);hydrateUrl();render()})
+  .catch(err=>{els.results.innerHTML=`<div class="empty">Failed to load catalog: ${err.message}</div>`});
