@@ -5,9 +5,8 @@ const roundOrder={top24:1,top12:2,top6:3,judge:4,semi:5,final:6,full:7};
 
 function norm(v=""){return v.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
 function battleTitle(b){return b.teams.map(t=>t.join(" & ")).join(" vs ")}
-function includesPerson(list,q){return list.some(x=>norm(x).includes(q))}
 function searchable(b,role){
-  const base=[String(b.year),b.roundLabel,battleTitle(b),...(b.winner||[])];
+  const base=[String(b.year),b.roundLabel];
   if(role==="judged") return [...base,...(b.judges||[])];
   if(role==="all") return [...base,...(b.dancers||[]),...(b.judges||[])];
   return [...base,...(b.dancers||[])];
