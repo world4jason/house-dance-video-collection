@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0d10" />
+  <title>House Dance Video Collection</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">HOUSE DANCE VIDEO COLLECTION</p>
+      <h1>Find a dancer. Find a round. Keep watching.</h1>
+      <p class="lede">Summer Dance Forever · House · 2022–2025</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Search and filters">
+      <label class="search-wrap">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="SHUHO, Hiro, 2023, Top 12…" autocomplete="off" />
+      </label>
+
+      <label>
+        <span>Year</span>
+        <select id="year">
+          <option value="">All years</option>
+          <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Round</span>
+        <select id="round">
+          <option value="">All rounds</option>
+          <option value="top24">Top 24</option>
+          <option value="top12">Top 12</option>
+          <option value="top6">Top 6</option>
+          <option value="judge">Judge Battle</option>
+          <option value="semi">Semi Final</option>
+          <option value="final">Final</option>
+          <option value="full">Full Stream</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Person role</span>
+        <select id="role">
+          <option value="danced">Danced</option>
+          <option value="judged">Judged</option>
+          <option value="all">All appearances</option>
+        </select>
+      </label>
+
+      <button id="clear" class="secondary" type="button">Clear</button>
+    </section>
+
+    <section class="coverage">
+      <strong>Catalog coverage</strong>
+      <span>2025 main battle: complete · 2023 main bracket metadata: indexed · 2022/2024: backfill in progress</span>
+    </section>
+
+    <section class="summary">
+      <div><strong id="resultCount">0</strong> results</div>
+      <div><strong id="watchedCount">0</strong> watched</div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite"></section>
+  </main>
+
+  <dialog id="playerDialog">
+    <div class="dialog-head">
+      <div>
+        <p id="dialogMeta" class="eyebrow"></p>
+        <h2 id="dialogTitle"></h2>
+      </div>
+      <button id="closeDialog" class="icon-button" aria-label="Close">×</button>
+    </div>
+    <div id="player" class="player"></div>
+    <div id="sourceLinks" class="source-links"></div>
+  </dialog>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <div class="card-top">
+        <div class="badges"></div>
+        <label class="watched">
+          <input type="checkbox" />
+          <span>Watched</span>
+        </label>
+      </div>
+      <h2></h2>
+      <p class="people"></p>
+      <p class="note"></p>
+      <div class="card-actions">
+        <button class="watch-button" type="button">Watch</button>
+        <a class="official-link" target="_blank" rel="noopener">Official source ↗</a>
+      </div>
+    </article>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
