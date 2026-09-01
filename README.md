@@ -1,6 +1,6 @@
 # House Dance Video Collection
 
-A small searchable library for **Summer Dance Forever / House Dance** videos.
+A searchable library for **Summer Dance Forever / House Dance** videos.
 
 ## What it does
 
@@ -9,17 +9,19 @@ A small searchable library for **Summer Dance Forever / House Dance** videos.
 - Switch person role: danced / judged / all appearances
 - Play indexed official YouTube videos in-place
 - Track watched videos in browser `localStorage`
-- Keep an optional `archiveUrl` fallback for lawful backup copies
+- Keep an optional archive fallback for lawful backup copies
 - Share a filtered view through URL query parameters
 
 ## Current catalog
 
-- **2025:** complete main House battle catalog (Top 24 → Final)
-- **2023:** main bracket metadata indexed; direct YouTube URLs are still being backfilled
-- **2024:** official full-stream + Final seeded
-- **2022:** Final seeded; catalog backfill pending
+There are currently **72 indexed entries** across 2022–2025.
 
-The data file is `data/battles.json`.
+- **2025:** complete 27-video main House battle catalog, Top 24 → Final
+- **2024:** 15 entries indexed, including the official full stream plus Judge Battles → Final and selected Top 24/Top 12/Top 6 videos. The official House Dance Forever 2024 playlist contains 27 main-battle videos; remaining early-round entries are being backfilled.
+- **2023:** Top 24 / Top 12 / Top 6 bracket metadata indexed, with a growing set of direct official YouTube links; later-round backfill is still in progress.
+- **2022:** 7 official videos indexed, including one Top 24, all three currently located Judge Battles, both Semis, and the Final; early rounds are being backfilled.
+
+Catalog files are split by year under `data/battles-YYYY.json`.
 
 ## Run locally
 
@@ -59,15 +61,13 @@ For long livestreams, the schema also supports `start` and `end` seconds so one 
 
 This repository intentionally stores **metadata and links, not copied copyrighted video files**.
 
-If you have a lawful backup copy, set `archiveUrl` to your private/self-hosted object URL. The UI will expose the backup as a secondary source.
+If you have a copy you are permitted to retain/use, keep the media outside GitHub in private object storage or on a NAS and attach it to the battle record as a fallback source. See [ARCHIVING.md](./ARCHIVING.md) for the recommended setup.
 
-Recommended storage design:
+The intended playback order is:
 
-1. Keep this Git repository as the durable metadata/index.
-2. Keep media in object storage or a NAS, not Git/Git LFS.
-3. Use stable object keys, for example `sdf/2025/house/top12/frankwa-vs-rachad.mp4`.
-4. Keep the bucket private unless you have redistribution rights.
-5. Maintain at least two copies if the archive matters.
+1. Official Summer Dance Forever / YouTube source
+2. Authorized private archive fallback, when available
+3. Metadata remains searchable even if every video source disappears
 
 ## Sources
 
