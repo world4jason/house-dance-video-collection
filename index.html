@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0d10" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>House Dance Video Collection</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -17,6 +18,20 @@
   </header>
 
   <main>
+    <section class="archive-panel" aria-label="Private Google Drive archive">
+      <div class="archive-copy">
+        <p class="eyebrow">PRIVATE ARCHIVE</p>
+        <h2>Back up battles to your Google Drive</h2>
+        <p id="driveStatus">Not connected. Official videos still play normally.</p>
+      </div>
+      <div class="archive-panel-actions">
+        <button id="driveConnect" class="drive-button" type="button">Connect Google Drive</button>
+        <button id="driveDisconnect" class="secondary compact" type="button" hidden>Disconnect</button>
+        <button id="driveSettings" class="secondary compact" type="button">Drive setup</button>
+        <a id="driveFolderLink" class="text-link" target="_blank" rel="noopener" hidden>Open archive folder ↗</a>
+      </div>
+    </section>
+
     <section class="controls" aria-label="Search and filters">
       <label class="search-wrap">
         <span>Search</span>
@@ -64,7 +79,7 @@
 
     <section class="summary">
       <div><strong id="resultCount">0</strong> results</div>
-      <div><strong id="watchedCount">0</strong> watched</div>
+      <div class="summary-right"><span><strong id="archiveCount">0</strong> Drive backups</span><span><strong id="watchedCount">0</strong> watched</span></div>
     </section>
 
     <section id="results" class="results" aria-live="polite"></section>
@@ -82,6 +97,53 @@
     <div id="sourceLinks" class="source-links"></div>
   </dialog>
 
+  <dialog id="archiveDialog" class="small-dialog">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">MY GOOGLE DRIVE</p>
+        <h2 id="archiveTitle">Archive battle</h2>
+      </div>
+      <button id="closeArchiveDialog" class="icon-button" aria-label="Close">×</button>
+    </div>
+    <div class="dialog-body">
+      <div id="archiveExisting" class="archive-existing"></div>
+      <label class="file-picker">
+        <span>Video file</span>
+        <input id="archiveFile" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.m4v" />
+      </label>
+      <div class="upload-row">
+        <button id="archiveUpload" class="drive-button" type="button">Upload to My Drive</button>
+        <a id="archiveOpen" class="text-link" target="_blank" rel="noopener" hidden>Open Drive copy ↗</a>
+      </div>
+      <progress id="archiveProgress" max="1" value="0" hidden></progress>
+      <p id="archiveMessage" class="help-text">The file goes directly from this browser to your Google Drive. It is not uploaded to this website or GitHub.</p>
+    </div>
+  </dialog>
+
+  <dialog id="driveSetupDialog" class="small-dialog">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">ONE-TIME SETUP</p>
+        <h2>Google Drive connection</h2>
+      </div>
+      <button id="closeDriveSetup" class="icon-button" aria-label="Close">×</button>
+    </div>
+    <div class="dialog-body">
+      <label>
+        <span>Google Web OAuth Client ID</span>
+        <input id="googleClientId" class="text-input" type="text" placeholder="1234567890-abc.apps.googleusercontent.com" autocomplete="off" />
+      </label>
+      <p class="help-text">Stored only in this browser. OAuth client IDs are public identifiers; no client secret is used by this static site.</p>
+      <div class="setup-actions">
+        <button id="saveDriveSetup" class="drive-button" type="button">Save</button>
+        <a class="text-link" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud credentials ↗</a>
+      </div>
+      <div class="setup-note">
+        <strong>Required:</strong> enable Google Drive API and add this site's origin as an Authorized JavaScript origin. For local testing also add <code>http://localhost:8000</code>.
+      </div>
+    </div>
+  </dialog>
+
   <template id="cardTemplate">
     <article class="card">
       <div class="card-top">
@@ -96,11 +158,14 @@
       <p class="note"></p>
       <div class="card-actions">
         <button class="watch-button" type="button">Watch</button>
-        <a class="official-link" target="_blank" rel="noopener">Official source ↗</a>
+        <button class="archive-button secondary" type="button">Archive</button>
+        <a class="official-link" target="_blank" rel="noopener">Official ↗</a>
       </div>
     </article>
   </template>
 
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="./drive.js" defer></script>
   <script src="./app.js" defer></script>
 </body>
 </html>
